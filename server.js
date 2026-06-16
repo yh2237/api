@@ -70,7 +70,7 @@ function getHttpsOptions(apiPath, method, postData) {
         method: method || 'GET',
         headers: { 'Authorization': authHeader },
         rejectUnauthorized: !PVE_SKIP_TLS_VERIFY,
-        lookup: (host, _, cb) => cb(null, host, 4),
+        family: 4,
     };
     if (PVE_CA_PATH && fs.existsSync(PVE_CA_PATH)) {
         opts.ca = fs.readFileSync(PVE_CA_PATH);
@@ -256,6 +256,15 @@ app.post('/api/webhook/deploy/:vmid', verifyGitHubSignature, async (req, res) =>
 app.post('/api/config/reload', (req, res) => {
     loadConfig();
     res.json({ message: 'Config reloaded', current: appsConfig });
+});
+
+log.info('PVE config', { host: PVE_HOST, port: PVE_PORT, node: PVE_NODE, skipTLS: PVE_SKIP_TLS_VERIFY });
+log.info('Proxy check', {
+    http_proxy: process.env.http_proxy,
+    https_proxy: process.env.https_proxy,
+    HTTP_PROXY: process.env.HTTP_PROXY,
+    HTTPS_PROXY: process.env.HTTPS_PROXY,
+    NO_PROXY: process.env.NO_PROXY,
 });
 
 const server = app.listen(PORT, () => {

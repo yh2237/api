@@ -104,10 +104,20 @@ function pveRequest(apiPath, options = {}) {
             req.destroy(new Error(`PVE API timeout (${PVE_TIMEOUT}ms)`));
         });
 
-        req.on('error', reject);
+        req.on('error', (err) => {
+            reject(err);
+        });
 
         if (postData) req.write(JSON.stringify(postData));
         req.end();
+    });
+}
+
+function pveAgentExec(vmid, shellCommand) {
+    const payload = { command: ['/bin/sh', '-c', shellCommand] };
+    return pveRequest(`/nodes/${PVE_NODE}/qemu/${vmid}/agent/exec`, {
+        method: 'POST',
+        body: payload,
     });
 }
 
@@ -163,8 +173,12 @@ app.get('/api/status', async (req, res) => {
 
         res.json({ cpu: cpuPercent, ram: ramPercent, netRx, netTx, diskRead, diskWrite });
     } catch (err) {
-        log.error('/api/status エラー', { error: err.message });
-        res.status(500).json({ error: err.message });
+        log.error('/api/status エラー', {
+            error: err?.message || String(err),
+            code: err?.code,
+            stack: err?.stack?.split('\n').slice(0, 2).join(' '),
+        });
+        res.status(500).json({ error: err?.message || 'Unknown error' });
     }
 });
 
@@ -224,12 +238,8 @@ app.post('/api/webhook/deploy/:vmid', verifyGitHubSignature, async (req, res) =>
     res.status(202).json({ message: 'Deploy accepted. Running asynchronously.', vmid });
 
     const shellCommand = `cd ${appConfig.cwd} && ${appConfig.script}`;
-    const payload = { command: ['/bin/sh', '-c', shellCommand] };
 
-    pveRequest(`/nodes/${PVE_NODE}/qemu/${vmid}/agent/exec`, {
-        method: 'POST',
-        body: payload,
-    }).then(result => {
+    pveAgentExec(vmid, shellCommand).then(result => {
         log.info('VM deploy 成功', { vmid, name: appConfig.name, pid: result.pid });
     }).catch(err => {
         log.error('VM deploy エラー', {
@@ -237,6 +247,7 @@ app.post('/api/webhook/deploy/:vmid', verifyGitHubSignature, async (req, res) =>
             name: appConfig.name,
             error: err?.message || String(err),
             code: err?.code,
+            stack: err?.stack?.split('\n').slice(0, 2).join(' '),
         });
     });
 });

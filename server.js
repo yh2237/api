@@ -70,6 +70,7 @@ function getHttpsOptions(apiPath, method, postData) {
         method: method || 'GET',
         headers: { 'Authorization': authHeader },
         rejectUnauthorized: !PVE_SKIP_TLS_VERIFY,
+        lookup: (host, _, cb) => cb(null, host, 4),
     };
     if (PVE_CA_PATH && fs.existsSync(PVE_CA_PATH)) {
         opts.ca = fs.readFileSync(PVE_CA_PATH);

@@ -28,9 +28,24 @@ function loadConfig() {
 
 loadConfig();
 
-app.use(express.json({
-    verify: (req, res, buf) => { req.rawBody = buf; }
-}));
+function bufferBody(req, res, next) {
+    const chunks = [];
+    req.on('data', chunk => chunks.push(chunk));
+    req.on('end', () => {
+        req.rawBody = Buffer.concat(chunks);
+        const ct = req.headers['content-type'] || '';
+        if (ct.startsWith('application/json') && req.rawBody.length) {
+            try {
+                req.body = JSON.parse(req.rawBody.toString());
+            } catch (e) {
+                return res.status(400).json({ error: 'Invalid JSON' });
+            }
+        }
+        next();
+    });
+}
+
+app.use(bufferBody);
 
 const publicDir = path.join(__dirname, 'public');
 if (fs.existsSync(publicDir)) {
@@ -104,6 +119,11 @@ function verifyGitHubSignature(req, res, next) {
     if (!signature) {
         log.warn('GitHub署名なしでリクエストを受信');
         return res.status(401).json({ error: 'No signature provided' });
+    }
+
+    if (!Buffer.isBuffer(req.rawBody) || !req.rawBody.length) {
+        log.warn('verifyGitHubSignature: req.rawBody is empty or missing');
+        return res.status(400).json({ error: 'Empty request body' });
     }
 
     const hmac = crypto.createHmac('sha256', GITHUB_WEBHOOK_SECRET);

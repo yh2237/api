@@ -1,14 +1,14 @@
 {
   "self": {
     "name": "api-lxc",
-    "branch": "yh2237/api/main",
+    "branch": "refs/heads/main",
     "isSelf": true,
     "cwd": "/srv/api",
     "script": "git pull && npm install && pm2 reload api-server"
   },
   "102": {
     "name": "0yh.dev",
-    "branch": "yh2237/profile-page/main",
+    "branch": "refs/heads/main",
     "cwd": "/var/www/",
     "script": "./up.sh"
   }

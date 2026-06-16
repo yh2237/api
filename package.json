@@ -1,0 +1,12 @@
+{
+  "name": "metrics-server",
+  "version": "1.0.0",
+  "description": "Proxmox host metrics API server",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}

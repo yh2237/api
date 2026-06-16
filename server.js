@@ -232,7 +232,12 @@ app.post('/api/webhook/deploy/:vmid', verifyGitHubSignature, async (req, res) =>
     }).then(result => {
         log.info('VM deploy 成功', { vmid, name: appConfig.name, pid: result.pid });
     }).catch(err => {
-        log.error('VM deploy エラー', { vmid, name: appConfig.name, error: err.message });
+        log.error('VM deploy エラー', {
+            vmid,
+            name: appConfig.name,
+            error: err?.message || String(err),
+            code: err?.code,
+        });
     });
 });
 

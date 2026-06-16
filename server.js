@@ -220,26 +220,21 @@ app.post('/api/webhook/deploy/:vmid', verifyGitHubSignature, async (req, res) =>
         return;
     }
 
-    try {
-        log.info('VM deploy をトリガー', { name: appConfig.name, vmid });
+    log.info('VM deploy をトリガー', { name: appConfig.name, vmid });
 
-        const shellCommand = `cd ${appConfig.cwd} && ${appConfig.script}`;
-        const payload = { command: ['/bin/sh', '-c', shellCommand] };
+    res.status(202).json({ message: 'Deploy accepted. Running asynchronously.', vmid });
 
-        const result = await pveRequest(`/nodes/${PVE_NODE}/qemu/${vmid}/agent/exec`, {
-            method: 'POST',
-            body: payload,
-        });
+    const shellCommand = `cd ${appConfig.cwd} && ${appConfig.script}`;
+    const payload = { command: ['/bin/sh', '-c', shellCommand] };
 
-        res.json({
-            message: `Deploy command sent to ${appConfig.name} successfully`,
-            vmid: vmid,
-            pid: result.pid,
-        });
-    } catch (err) {
-        log.error(`VM deploy エラー`, { vmid, name: appConfig.name, error: err.message });
-        res.status(500).json({ error: err.message });
-    }
+    pveRequest(`/nodes/${PVE_NODE}/qemu/${vmid}/agent/exec`, {
+        method: 'POST',
+        body: payload,
+    }).then(result => {
+        log.info('VM deploy 成功', { vmid, name: appConfig.name, pid: result.pid });
+    }).catch(err => {
+        log.error('VM deploy エラー', { vmid, name: appConfig.name, error: err.message });
+    });
 });
 
 app.post('/api/config/reload', (req, res) => {

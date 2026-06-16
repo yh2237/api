@@ -33,8 +33,7 @@ function bufferBody(req, res, next) {
     req.on('data', chunk => chunks.push(chunk));
     req.on('end', () => {
         req.rawBody = Buffer.concat(chunks);
-        const ct = req.headers['content-type'] || '';
-        if (ct.startsWith('application/json') && req.rawBody.length) {
+        if (req.rawBody.length) {
             try {
                 req.body = JSON.parse(req.rawBody.toString());
             } catch (e) {

@@ -9,7 +9,7 @@ const fs = require('fs');
 const log = require('./logger');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3100;
 const CONFIG_PATH = path.join(__dirname, 'apps.config.json');
 const PVE_TIMEOUT = parseInt(process.env.PVE_TIMEOUT || '15000', 10);
 let appsConfig = {};

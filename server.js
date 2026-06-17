@@ -2,6 +2,7 @@ require('dotenv').config();
 
 const { spawn } = require('child_process');
 const express = require('express');
+const cors = require('cors');
 const crypto = require('crypto');
 const https = require('https');
 const path = require('path');
@@ -46,6 +47,7 @@ function bufferBody(req, res, next) {
     });
 }
 
+app.use(cors());
 app.use(bufferBody);
 
 const publicDir = path.join(__dirname, 'public');

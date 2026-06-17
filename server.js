@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const { spawn } = require('child_process');
 const express = require('express');
 const crypto = require('crypto');
@@ -226,11 +228,7 @@ app.post('/api/webhook/deploy/:vmid', verifyGitHubSignature, async (req, res) =>
             });
         };
 
-        if (res.writableFinished) {
-            setTimeout(runUpdate, 1000);
-        } else {
-            res.on('finish', () => setTimeout(runUpdate, 1000));
-        }
+        setTimeout(runUpdate, 1000);
         return;
     }
 
@@ -259,13 +257,6 @@ app.post('/api/config/reload', (req, res) => {
 });
 
 log.info('PVE config', { host: PVE_HOST, port: PVE_PORT, node: PVE_NODE, skipTLS: PVE_SKIP_TLS_VERIFY });
-log.info('Proxy check', {
-    http_proxy: process.env.http_proxy,
-    https_proxy: process.env.https_proxy,
-    HTTP_PROXY: process.env.HTTP_PROXY,
-    HTTPS_PROXY: process.env.HTTPS_PROXY,
-    NO_PROXY: process.env.NO_PROXY,
-});
 
 const server = app.listen(PORT, () => {
     log.info(`Server running on port ${PORT}`);

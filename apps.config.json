@@ -1,11 +1,4 @@
 {
-  "self": {
-    "name": "api-lxc",
-    "branch": "refs/heads/main",
-    "isSelf": true,
-    "cwd": "/srv/api",
-    "script": "git pull && npm install && pm2 reload api-server"
-  },
   "102": {
     "name": "0yh.dev",
     "branch": "refs/heads/main",

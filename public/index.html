@@ -1,14 +1,121 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
-<meta charset="UTF-8">
-<title>2237yh.net | API</title>
-<style>
-body { font-family: sans-serif; max-width: 600px; margin: 40px auto; text-align: center; }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>API | api.2237yh.net</title>
+  <link rel="stylesheet" href="https://0yh.dev/css/home.css">
+  <link rel="stylesheet" href="https://0yh.dev/css/linkbar.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="icon" href="https://cdn.2237yh.net/imgs/favicon.png" type="image/png">
 </head>
-<body>
-<h1>2237yh.net | API</h1>
-<p><a href="https://0yh.dev">0yh.dev</a>に戻れ</p>
+
+<body class="home font-loading">
+
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="header-brand">
+        <a href="/" class="brand-mark">
+          <img src="https://cdn.2237yh.net/imgs/0yh.dev.png" alt="0yh.dev" class="banner" height="40">
+        </a>
+      </div>
+      <div class="header-actions">
+        <a href="https://adachidb.net/" target="_blank" rel="noopener noreferrer"><img src="https://cdn.2237yh.net/imgs/mechanicalgirls.png"
+            alt="mechanicalgirls" height="32"></a>
+      </div>
+    </div>
+    <div class="linkbar">
+      <ul id="normal" class="dropmenu">
+        <li><a href="https://0yh.dev/">PAGES</a>
+          <ul>
+            <li><a href="https://0yh.dev/#readme">README</a></li>
+            <li><a href="https://0yh.dev/#about-me">About Me</a></li>
+            <li><a href="https://0yh.dev/#links">Links</a></li>
+          </ul>
+        </li>
+        <li><a href="https://0yh.dev/server">SERVER</a>
+          <ul>
+            <li><a href="https://0yh.dev/server">ABOUT</a></li>
+            <li><a href="https://0yh.dev/status">STATUS</a></li>
+          </ul>
+        </li>
+        <li><a href="https://0yh.dev/projects">PROJECTS</a>
+          <ul>
+            <li><a href="https://adachidb.net/" target="_blank" rel="noopener noreferrer">足立データベース</a></li>
+            <li><a href="https://bot.adachidb.net/" target="_blank" rel="noopener noreferrer">足立レイ読み上げBot</a></li>
+            <li><a href="https://github.com/yh2237/UtauTTS" target="_blank" rel="noopener noreferrer">UtauTTS</a></li>
+            <li><a href="https://0yh.dev/projects">一覧</a></li>
+          </ul>
+        </li>
+        <li><a href="https://0yh.dev/contact">CONTACT</a>
+          <ul>
+            <li><a href="mailto:mail@2237yh.net">EMAIL</a></li>
+            <li><a href="https://twitter.com/2237yh" target="_blank" rel="noopener noreferrer">TWITTER</a></li>
+            <li><a href="https://github.com/yh2237" target="_blank" rel="noopener noreferrer">GITHUB</a></li>
+            <li><a href="https://bsky.app/profile/0yh.dev" target="_blank" rel="noopener noreferrer">BLUESKY</a></li>
+            <li><a href="https://0yh.dev/contact">一覧</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </header>
+
+  <nav class="mobile-nav" role="navigation" aria-label="Mobile navigation">
+    <ul>
+      <li><a href="https://0yh.dev/">TOP</a></li>
+      <li><a href="https://0yh.dev/projects">Projects</a></li>
+      <li><a href="https://0yh.dev/server">Server</a></li>
+      <li><a href="https://0yh.dev/status">Status</a></li>
+      <li><a href="https://0yh.dev/contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <div class="page-wrapper">
+
+    <div id="fontLoader" class="font-loader" role="status" aria-live="polite">
+      <div class="font-loader-inner">
+        <p class="font-loader-title">フォントを読み込み中</p>
+        <div class="font-loader-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+          <div id="fontProgress" class="font-loader-fill"></div>
+        </div>
+        <div class="font-loader-meta">
+          <span id="fontProgressText">0%</span>
+          <button type="button" id="liteModeButton" class="font-loader-button">軽量ページを読み込む</button>
+        </div>
+        <noscript>
+          <p class="noscript-msg">なんと、JavaScriptを有効にしないと動かない</p>
+        </noscript>
+      </div>
+    </div>
+
+    <main class="content">
+      <section class="grid">
+        <article class="panel">
+          <h2>API</h2>
+          <p>このページには来るべきじゃないですね。</p>
+          <p>とりあえず私が書いた足立でも見て落ち着いてください</p>
+          <p><img src="https://cdn.2237yh.net/imgs/zumo_nui.jpg" alt="私が書いた足立" width="70%" style="max-width:420px;height:auto"></p>
+          <p><a href="https://0yh.dev/" class="text-link">トップに戻る</a></p>
+        </article>
+        <hr>
+      </section>
+
+      <footer class="site-footer">
+        <div class="footer-links">
+          <a href="https://0yh.dev/">TOP</a>
+          <a href="https://0yh.dev/projects">Projects</a>
+          <a href="https://0yh.dev/server">Server</a>
+          <a href="https://0yh.dev/status">Status</a>
+          <a href="https://0yh.dev/contact">Contact</a>
+        </div>
+        <p>&copy; 2024 yh</p>
+      </footer>
+    </main>
+  </div>
+
+  <script src="https://0yh.dev/js/font_loader.js"></script>
+
 </body>
+
 </html>

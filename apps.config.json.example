@@ -1,0 +1,8 @@
+{
+  "102": {
+    "name": "0yh.dev",
+    "branch": "refs/heads/main",
+    "cwd": "/var/www/",
+    "script": "./up.sh"
+  }
+}
